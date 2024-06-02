@@ -1,1 +1,4 @@
-Alt + shoft + down arrow
+1. Alt + shoft + down arrow
+
+2. we use bcryptjs to salt and hash the password.
+

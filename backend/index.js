@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
+const errorHandler = require("./middlewares/errorHandler");
 dotenv.config();
 app.use(express.json());
 
@@ -19,6 +20,11 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+// Error handler middleware
+app.use(errorHandler);
+
+
 app.listen(3000, () => {
     console.log(`Server is running at port ${PORT}`);
 })
