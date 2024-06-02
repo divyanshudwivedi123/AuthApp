@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const userRoutes = require("./routes/user.route");
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
@@ -10,9 +11,11 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 }).catch((err) => {
     console.log(err);
 })
-app.get("/", (req, res) => {
-    res.send("Hello world !");
-})
+// app.get("/", (req, res) => {
+//     res.send("Hello world !");
+// })
+
+app.use("/api/user", userRoutes);
 
 app.listen(3000, () => {
     console.log(`Server is running at port ${PORT}`);
