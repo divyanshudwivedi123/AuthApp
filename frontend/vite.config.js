@@ -7,7 +7,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://authapp-f8v0.onrender.com',
-        secure: false,
+        secure: true,
       },
     },
   },
