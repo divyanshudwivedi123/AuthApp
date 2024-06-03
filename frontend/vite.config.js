@@ -8,6 +8,7 @@ export default defineConfig({
       '/api': {
         target: 'https://authapp-btzm.onrender.com',
         secure: true,
+        changeOrigin: true
       },
     },
   },
