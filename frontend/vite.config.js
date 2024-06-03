@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://authapp-btzm.onrender.com',
+        target: 'https://authapp-q5zn.onrender.com',
         secure: true,
         changeOrigin: true
       },
