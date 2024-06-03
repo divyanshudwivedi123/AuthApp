@@ -3,11 +3,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
 const errorHandler = require("./middlewares/errorHandler");
 dotenv.config();
 app.use(express.json());
+app.use(cookieParser);
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Connected to DB successfully !");
