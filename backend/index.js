@@ -9,7 +9,18 @@ const cors = require("cors");
 // const path = require ('path');
 dotenv.config();
 const app = express();
-app.use(cors());
+
+
+const allowedOrigins = ['https://auth-app-neon.vercel.app']; 
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true, // Include this if you're sending cookies or authorization headers
+  optionsSuccessStatus: 200 // Default is 204
+}
+
+app.use(cors(corsOptions));
+
 
 mongoose
   .connect(process.env.MONGO_URL)
