@@ -4,6 +4,7 @@ const dotenv = require ('dotenv');
 const userRoutes = require ('./routes/user.route.js');
 const authRoutes = require ('./routes/auth.route.js');
 const cookieParser= require ('cookie-parser');
+const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 // const path = require ('path');
 dotenv.config();
@@ -34,9 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.get("/", (req, res) => {
-    res.send("Hello world");
-})
+
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
@@ -50,6 +49,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });

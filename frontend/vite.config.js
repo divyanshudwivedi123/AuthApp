@@ -6,9 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http:localhost:3000',
-        secure: true,
-        changeOrigin: true
+        target: 'https://authapp-olfy.onrender.com'
       },
     },
   },
