@@ -1,35 +1,55 @@
-const express = require("express");
-const app = express();
+const express =  require('express');
+const mongoose = require ('mongoose');
+const dotenv = require ('dotenv');
+const userRoutes = require ('./routes/user.route.js');
+const authRoutes = require ('./routes/auth.route.js');
+const cookieParser= require ('cookie-parser');
 const cors = require("cors");
-app.use(cors());
-const PORT = process.env.PORT;
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const userRoutes = require("./routes/user.route");
-const authRoutes = require("./routes/auth.route");
-const errorHandler = require("./middlewares/errorHandler");
+// const path = require ('path');
 dotenv.config();
+const app = express();
+app.use(cors());
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// const __dirname = path.resolve();
+
+
+
+// app.use(express.static(path.join(__dirname, '/client/dist')));
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// });
 
 app.use(express.json());
-app.use(cookieParser);
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.log("Connected to DB successfully !");
-}).catch((err) => {
-    console.log(err);
+app.use(cookieParser());
+
+
+app.get("/", (req, res) => {
+    res.send("Hello world");
 })
-// app.get("/", (req, res) => {
-//     res.send("Hello world !");
-// })
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
-app.use("/api/user", userRoutes);
-app.use("/api/auth", authRoutes);
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
+});
 
-// Error handler middleware
-app.use(errorHandler);
-
-
-app.listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}`);
-})
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
